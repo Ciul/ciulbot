@@ -25,6 +25,7 @@
   "dependencies": {
     "blipp": "^2.3.0",
     "hapi": "^16.5.0",
-    "isomorphic-fetch": "^2.2.1"
+    "isomorphic-fetch": "^2.2.1",
+    "redux": "^3.7.2"
   }
 }
