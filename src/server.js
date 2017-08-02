@@ -8,7 +8,10 @@ server.connection({
 
 async function init() {
     const blipp = await import('./blipp')
+    const bot   = await import('./bot')
+    
     blipp.default(server)
+    bot.default(server)
 
     return server;
 }
