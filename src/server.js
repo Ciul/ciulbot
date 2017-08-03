@@ -1,4 +1,6 @@
 import Hapi from 'hapi'
+import Blipp from 'blipp'
+import bot from './bot'
 
 const server = new Hapi.Server()
 server.connection({
@@ -7,11 +9,11 @@ server.connection({
 })
 
 async function init() {
-    const blipp = await import('./blipp')
-    const bot   = await import('./bot')
+    await server.register({
+        register: Blipp
+    })
     
-    blipp.default(server)
-    bot.default(server)
+    await bot(server)
 
     return server;
 }

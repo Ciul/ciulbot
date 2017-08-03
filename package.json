@@ -5,9 +5,9 @@
     "clean": "rimraf dist/**",
     "prebuild": "npm run clean",
     "build": "webpack",
-    "dev": "webpack-dev-server",
     "prestart": "npm run build",
-    "start": "node dist/app.bundle.js"
+    "start": "node dist/app.bundle.js",
+    "ngrok": "ngrok http 9000"
   },
   "license": "MIT",
   "devDependencies": {
@@ -19,8 +19,7 @@
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.6.0",
     "rimraf": "^2.6.1",
-    "webpack": "^3.4.1",
-    "webpack-dev-server": "^2.6.1"
+    "webpack": "^3.4.1"
   },
   "dependencies": {
     "blipp": "^2.3.0",

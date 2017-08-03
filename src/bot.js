@@ -5,10 +5,13 @@ const botPlugin = (server, options, next) => {
         method: 'GET',
         config: {
             description: 'Bot entry main point',
-            handler
+            handler: (request, reply) => {
+                reply('HERE')
+            }
         }
     })
 
+    next()
 }
 
 botPlugin.attributes = {
@@ -16,7 +19,7 @@ botPlugin.attributes = {
     version:    '1.0.0'
 }
 
-export default (server) => 
+export default (server) =>
     server.register({
         register: botPlugin,
         options: {}
