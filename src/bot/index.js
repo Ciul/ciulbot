@@ -1,12 +1,25 @@
+import hooks from './hooks'
+
 const botPlugin = (server, options, next) => {
 
     server.route({
         path:   '/webhook',
         method: 'GET',
         config: {
-            description: 'Bot entry main point',
+            description: 'Bot GET entry point',
             handler: (request, reply) => {
-                reply('HERE')
+                hooks({ request, reply })
+            }
+        }
+    })
+
+    server.route({
+        path:   '/webhook',
+        method: 'POST',
+        config: {
+            description: 'Bot POST entry point',
+            handler: (request, reply) => {
+                hooks({ request, reply })
             }
         }
     })

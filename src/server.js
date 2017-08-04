@@ -2,7 +2,13 @@ import Hapi from 'hapi'
 import Blipp from 'blipp'
 import bot from './bot'
 
-const server = new Hapi.Server()
+const server = new Hapi.Server({
+    connections: {
+        router: {
+            stripTrailingSlash: true
+        }
+    }
+})
 server.connection({
     port: 9000,
     host: 'localhost'
