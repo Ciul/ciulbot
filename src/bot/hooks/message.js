@@ -1,5 +1,5 @@
 export default ({ request, reply }) => {
-    const { payload: { object, entry: entries } } = request
+    reply().code(200)
     
     if(object === 'page') {
         // entries.forEach((entry) => {
@@ -13,9 +13,7 @@ export default ({ request, reply }) => {
         //     })
         // })
 
-        reply().code(200)
     }
     
-
     return ({ request, reply })
 }

@@ -19,7 +19,7 @@ const botPlugin = (server, options, next) => {
         config: {
             description: 'Bot POST entry point',
             handler: (request, reply) => {
-                hooks({ request, reply })
+                reply().code(200)
             }
         }
     })

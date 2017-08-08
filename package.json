@@ -7,7 +7,8 @@
     "build": "webpack",
     "prestart": "npm run build",
     "start": "node dist/app.bundle.js",
-    "ngrok": "ngrok http 9000"
+    "ngrok": "ngrok http 9000",
+    "test": "babel-watch test/index.js"
   },
   "license": "MIT",
   "devDependencies": {
@@ -18,6 +19,7 @@
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.6.0",
+    "babel-watch": "^2.0.7",
     "ngrok": "^2.2.15",
     "rimraf": "^2.6.1",
     "webpack": "^3.4.1"
