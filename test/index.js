@@ -1,73 +1,45 @@
-let p = (next) => ({ request, reply }) => next()
-
-let p1 = (next) => ({ request, reply } = {}) => {
+const p1 = (next) => ({ request, reply } = {}) => {
     console.log('P1: ', request, reply)
-    
+
     next()
 }
 
-let p2 = (next) => ({ request, reply } = {}) => {
+const p2 = (next) => ({ request, reply } = {}) => {
     console.log('P2: ', request, reply)
 
-    // next()
+    next()
 }
 
-let p3 = (next) => ({ request, reply } = {}) => {
+const p3 = (next) => ({ request, reply } = {}) => {
     console.log('P3: ', request, reply)
 
     next()
 }
 
-const d = {
-    request:    'request',
-    reply:      'reply'
+const whatHandlersReceive = {
+    request: {},
+    reply: f => f
 }
 
-console.log('---------------------------')
-console.log('START')
-new Promise((resolve, reject) => {
-    p(resolve)(d)
-})
-    .then(() => {
-        
+const applyHandlersSolvers = (...handlers) => (payload) => {
+    handlers = handlers.slice().reverse()
+    const [firstHandler, ...restHandlers] = handlers
+
+    const createPromise = (fn, data) =>
         new Promise((resolve, reject) => {
-            p1(resolve)(d)
+            fn(resolve)(data)
         })
-            .then(() => {
-               
-                new Promise((resolve, reject) => {
-                    p2(resolve)(d)
+
+    const r = restHandlers.reduce((prev, curr, i) => {
+        return () =>
+            createPromise(curr, payload)
+                .then(() => {
+                    prev()
                 })
-                    .then(() => {
-                       
-                        new Promise((resolve, reject) => {
-                            p3(resolve)(d)
-                        })
-                            .then(() => {
-                                console.log('all done') 
-                            })
 
-                    })
+    }, () => createPromise(firstHandler, payload))
 
-            })
+    return r
+}
 
-    })
-
-// const applyHandlers = (...handlers) => {
-//     const [firstHandler, ...restHandlers] = handlers
-
-//     handlers.reduce(
-//         (previous, current, index, h) => {
-//             return previous.then(
-//                 new Promise((resolve, reject) => {
-//                     h[index](resolve)(d)
-//                 })
-//             )
-//         },
-//         new Promise((resolve, reject) => firstHandler(resolve)(d))
-//     )
-// }
-
-console.log('---------------------------')
-
-// applyHandlers(p, p1, p2, p3)
+applyHandlersSolvers(p1, p2, p3)(whatHandlersReceive)()
