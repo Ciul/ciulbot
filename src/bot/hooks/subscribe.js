@@ -1,4 +1,4 @@
-export default ({ request, reply }) => {
+export default (next) => ({ request, reply }) => {
     const { query } = request
     
     if(query['hub.mode'] === 'subscribe') {
@@ -7,7 +7,7 @@ export default ({ request, reply }) => {
         } else {
             reply().code(403)
         }
+    } else {
+        next()
     }
-
-    return ({ request, reply })
 }

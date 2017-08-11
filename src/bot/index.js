@@ -1,4 +1,4 @@
-import hooks from './hooks'
+import createHooks from './hooks'
 
 const botPlugin = (server, options, next) => {
 
@@ -8,7 +8,7 @@ const botPlugin = (server, options, next) => {
         config: {
             description: 'Bot GET entry point',
             handler: (request, reply) => {
-                hooks({ request, reply })
+                createHooks({ request, reply })
             }
         }
     })
@@ -19,7 +19,7 @@ const botPlugin = (server, options, next) => {
         config: {
             description: 'Bot POST entry point',
             handler: (request, reply) => {
-                reply().code(200)
+                createHooks({ request, reply })
             }
         }
     })

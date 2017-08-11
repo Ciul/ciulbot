@@ -1,6 +1,8 @@
-import compose from '../../utils/compose'
+import applyResolvers from '../../utils/applyresolvers'
 
 import message from './message'
 import subscribe from './subscribe'
 
-export default compose(subscribe)
+export default (data) => {
+    return applyResolvers(subscribe, message)(data)()
+}
