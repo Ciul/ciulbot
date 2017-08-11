@@ -1,19 +1,21 @@
-const p1 = (next) => ({ request, reply } = {}) => {
-    console.log('P1: ', request, reply)
+import createMiddlewareStack from '../src/utils/applyresolvers'
 
-    next()
+const p1 = (next) => (store, action) => {
+    console.log('P1: ', store, action)
+
+    next('Action from P1')
 }
 
-const p2 = (next) => ({ request, reply } = {}) => {
-    console.log('P2: ', request, reply)
+const p2 = (next) => (store, action) => {
+    console.log('P2: ', store, action)
 
-    next()
+    next('Action from P2')
 }
 
-const p3 = (next) => ({ request, reply } = {}) => {
-    console.log('P3: ', request, reply)
+const p3 = (next) => (store, action) => {
+    console.log('P3: ', store, action)
 
-    next()
+    next('Action from P3')
 }
 
 const whatHandlersReceive = {
@@ -21,25 +23,4 @@ const whatHandlersReceive = {
     reply: f => f
 }
 
-const applyHandlersSolvers = (...handlers) => (payload) => {
-    handlers = handlers.slice().reverse()
-    const [firstHandler, ...restHandlers] = handlers
-
-    const createPromise = (fn, data) =>
-        new Promise((resolve, reject) => {
-            fn(resolve)(data)
-        })
-
-    const r = restHandlers.reduce((prev, curr, i) => {
-        return () =>
-            createPromise(curr, payload)
-                .then(() => {
-                    prev()
-                })
-
-    }, () => createPromise(firstHandler, payload))
-
-    return r
-}
-
-applyHandlersSolvers(p1, p2, p3)(whatHandlersReceive)()
+createMiddlewareStack(p1, p2, p3)(whatHandlersReceive)()
